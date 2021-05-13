@@ -27,7 +27,7 @@ To install the hook:
    "adapt" I mean:
    * Check/update the content of the
      [`.pre-commit/hooks.yaml`](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/hooks.yaml)
-     file:
+     file (the four categories are *mandatory*; comments will be skipped):
      - Each hook has a name.
      - `cmd` is the executable that needs to be called (full path if not part of the
        `PATH`).
@@ -36,8 +36,8 @@ To install the hook:
        that *check* if some rework needs to happen **without modifying the files
        themselves**.
    * [Un]Register your hooks from the `.pre-commit/entrypoint.sh` file, associated with
-     the files if should run on (identified via its extension). (You should only need to
-     modify the
+     the files they should run on (identified via its extension). (You should only need
+     to modify the associative
      [array at the top of the script](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5),
      after the `declare -A` statement.)
 2. Copy the `pre-commit` file -or the content thereof- to a `.git/hooks/pre-commit` one.
