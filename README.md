@@ -27,7 +27,8 @@ To install the hook:
    "adapt" I mean:
    * Check/update the content of the
      [`.pre-commit/hooks.yaml`](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/hooks.yaml)
-     file (the four categories are *mandatory*; comments will be skipped):
+     file (the name and following three keys mentioned below are *mandatory*; comments
+     will be skipped):
      - Each hook has a name.
      - `cmd` is the executable that needs to be called (full path if not part of the
        `PATH`).
