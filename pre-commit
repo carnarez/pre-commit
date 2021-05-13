@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+if [ $(docker images | grep pre-commit | grep -c ${PWD##*/}) == "0" ]; then
+  echo -e "\e[1mBuilding the required pre-commit:${PWD##*/} image:\e[0m\n"
+  docker build --build-arg uid=1000 --file .pre-commit/Dockerfile --tag pre-commit:${PWD##*/} .pre-commit
+else
+  echo "Using existing pre-commit:${PWD##*/} image."
+  docker build --build-arg uid=1000 --file .pre-commit/Dockerfile --tag pre-commit:${PWD##*/} .pre-commit &>/dev/null
+fi
+
+docker run --rm --volume $PWD:/usr/src pre-commit:${PWD##*/}
