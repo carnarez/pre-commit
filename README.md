@@ -10,8 +10,9 @@ one would expect from the CI of a code repository.
 
 Linters/code checkers are written in various syntaxes, and I do not feel like installing
 and updating all those interpreters and other compilers on my local system. The calls to
-those linters/checkers are also defined *in clear*, and I do not need to guess/dig
-through various layers of wrappers and configuration files to modify them.
+those linters/checkers are most of the times obfuscated by several layers of wrappers
+and configuration files; I would rather have them defined *in clear*, without needing to
+guess/dig through all that to modify them.
 
 I am also obsessed with keeping my system clean of all superflous/rarely used
 dependencies.
