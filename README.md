@@ -14,20 +14,20 @@ keeping/updating all those interpreters and other compilers on my system.
 The calls to those linters/checkers are also defined *in clear*, and I do not need to
 guess/dig through various layers of wrappers and config files to modify them.
 
-I am also obsessed with keeping my system clean of all superflous dependencies. 
+(I am also obsessed with keeping my system clean of all superflous dependencies.)
 
 > **How?**
 
 [`Docker`](https://www.docker.com/). A container run triggered as a pre-commit hook from
-the `git` workflow. And a [`cron`](https://en.wikipedia.org/wiki/Cron) job on my local
-system to rebuild the image from scratch every so often (after updating some package
-versions).
+the `git` workflow.
 
 To install the hook:
 
 1. Copy, then adapt the content of the `.pre-commit/` folder in the target repo. By
    "adapt" I mean:
-   * Check/update the content of the `.pre-commit/hooks.yaml` file:
+   * Check/update the content of the
+     [`.pre-commit/hooks.yaml`](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/hooks.yaml)
+     file:
      - Each hook has a name.
      - `cmd` is the executable that needs to be called (full path if not part of the
        `PATH`).
@@ -37,8 +37,9 @@ To install the hook:
        themselves**.
    * [Un]Register your hooks from the `.pre-commit/entrypoint.sh` file, associated with
      the files if should run on (identified via its extension). (You should only need to
-     modify the `Bash` array at the top of the script, after the `declare -A`
-     statement.)
+     modify the
+     [array at the top of the script](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5),
+     after the `declare -A` statement.)
 2. Copy the `pre-commit` file -or the content thereof- to a `.git/hooks/pre-commit` one.
    Make sure the container runs as the same user as your own (as given by `echo $UID`)
    by feeding it to the `--build-arg uid=` flag in the `pre-commit` file.
