@@ -41,6 +41,11 @@ To install the hook:
      to modify the associative
      [array at the top of the script](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5),
      after the `declare -A` statement.)
+   * Do not forget to edit the `.pre-commit/requirements.txt` file to add/remove any
+     dependencies (or any other file defining your project dependencies). Version-pin
+     them if you wish (I am personally still not convinced about pinning linting/code
+     checking dependencies). The current template is for `Python`, but feel free to
+     modify the `.pre-commit/Dockerfile` to add any other syntaxes.
 2. Copy the `pre-commit` file -or the content thereof- to a `.git/hooks/pre-commit` one.
    Make sure the container runs as the same user as your own (as given by `echo $UID`)
    by feeding it to the `--build-arg uid=` flag in the `pre-commit` file.
