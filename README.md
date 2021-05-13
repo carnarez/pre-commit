@@ -21,7 +21,7 @@ dependencies.
 [`Docker`](https://www.docker.com/). A container run triggered as a pre-commit hook from
 the `git` workflow.
 
-To install the hook:
+To install:
 
 1. Copy, then adapt the content of the `.pre-commit/` folder in the target repo. By
    "adapt" I mean:
