@@ -1,20 +1,20 @@
 **Small hack to run containerized pre-commit hooks.** Nothing to do with the brilliant
-`Python` [package with the same name](https://pre-commit.com/), just a plain
+`Python` package with the same name, just a plain
 [`git` hook](https://git-scm.com/docs/githooks)).
 
 > **Why?**
 
-Although `pre-commit` (and similar tools) are performing *very* well, I like the idea of
-having a local *runner* defined in a similar way as what one would expect from the CI
-of a code repository. 
+Although [`pre-commit`](https://pre-commit.com/) (and similar tools) are performing
+*very* well, I like the idea of having a local *runner* defined in a similar way as what
+one would expect from the CI of a code repository. 
 
-Some linters/checkers were written in different syntaxes, and I do not feel like
-keeping/updating all those interpreters and other compilers on my system.
+Linters/code checkers are written in various syntaxes, and I do not feel like installing
+and updating all those interpreters and other compilers on my local system. The calls to
+those linters/checkers are also defined *in clear*, and I do not need to guess/dig
+through various layers of wrappers and configuration files to modify them.
 
-The calls to those linters/checkers are also defined *in clear*, and I do not need to
-guess/dig through various layers of wrappers and config files to modify them.
-
-(I am also obsessed with keeping my system clean of all superflous dependencies.)
+I am also obsessed with keeping my system clean of all superflous/rarely used
+dependencies.
 
 > **How?**
 
@@ -25,22 +25,20 @@ To install the hook:
 
 1. Copy, then adapt the content of the `.pre-commit/` folder in the target repo. By
    "adapt" I mean:
-   * Check/update the content of the
-     [`.pre-commit/hooks.yaml`](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/hooks.yaml)
-     file (the name and following three keys mentioned below are *mandatory*; comments
-     will be skipped):
+   * Check/update the content of the `.pre-commit/hooks.yaml` file (the name and
+     following three keys mentioned below are *mandatory*; comments will be skipped):
      - Each hook has a name.
      - `cmd` is the executable that needs to be called (full path if not part of the
        `PATH`).
      - `flags` contains the flags that will be fed to the executable.
      - `check` contains the flags fed to the executable (on top of the previous `flags`)
-       that *check* if some rework needs to happen **without modifying the files
+       when *checking* if some rework needs to happen **without modifying the files
        themselves**.
    * [Un]Register your hooks from the `.pre-commit/entrypoint.sh` file, associated with
      the files they should run on (identified via its extension). (You should only need
-     to modify the associative
-     [array at the top of the script](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5),
-     after the `declare -A` statement.)
+     to modify the
+     [associative array](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5)
+     at the top of the script, after the `declare -A` statement.)
    * Do not forget to edit the `.pre-commit/requirements.txt` file to add/remove any
      dependencies (or any other file defining your project dependencies). Version-pin
      them if you wish (I am personally still not convinced about pinning linting/code
