@@ -5,7 +5,7 @@ set -e
 uid=1000
 
 if [ $(docker images | grep pre-commit | grep -c ${PWD##*/}) == "0" ]; then
-  echo -e "\e[1mBuilding the required pre-commit:${PWD##*/} image:\e[0m\n"
+  echo -e "$(tput bold)Building the required pre-commit:${PWD##*/} image:$(tput sgr0)\n"
   docker build --build-arg uid=$uid --tag pre-commit:${PWD##*/} .pre-commit
 else
   echo "Using existing pre-commit:${PWD##*/} image."
