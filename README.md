@@ -2,7 +2,7 @@
 `Python` package with the same name, just a plain
 [`git` hook](https://git-scm.com/docs/githooks)).
 
-> **Why?**
+### Why?
 
 Although [`pre-commit`](https://pre-commit.com/) (and similar tools) are performing
 *very* well, I like the idea of having a local *runner* defined in a similar way as what
@@ -17,7 +17,7 @@ guess/dig through all that to modify them.
 I am also obsessed with keeping my system clean of all superflous/rarely used
 dependencies.
 
-> **How?**
+### How?
 
 [`Docker`](https://www.docker.com/). A container run triggered as a pre-commit hook from
 the `git` workflow. Check this out:
