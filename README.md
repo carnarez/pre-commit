@@ -1,5 +1,5 @@
 **Small hack to run containerized pre-commit hooks.** Nothing to do with the brilliant
-`Python` package with the same name, just a plain
+`Python` package with the same name, just a vanilla
 [`git` hook](https://git-scm.com/docs/githooks)).
 
 ### Why?
