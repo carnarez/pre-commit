@@ -12,4 +12,8 @@ else
   docker build --build-arg uid=$uid --tag pre-commit:${PWD##*/} .pre-commit &>/dev/null
 fi
 
-docker run --rm --volume $PWD:/usr/src pre-commit:${PWD##*/}
+if [ ! -d /tmp/pre-commit/${PWD##*/}/mypy_cache ]; then
+  mkdir -p /tmp/pre-commit/${PWD##*/}/mypy_cache
+fi
+
+docker run --rm --volume $PWD:/usr/src --volume /tmp/pre-commit/${PWD##*/}/mypy_cache:/tmp/mypy_cache pre-commit:${PWD##*/}
