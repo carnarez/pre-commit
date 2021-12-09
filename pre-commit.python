@@ -2,14 +2,14 @@
 
 set -e
 
-uid=1000
+GID=$(id -g)
 
 if [ $(docker images | grep pre-commit | grep -c ${PWD##*/}) == "0" ]; then
   echo -e "$(tput bold)Building the required pre-commit:${PWD##*/} image:$(tput sgr0)\n"
-  docker build --build-arg uid=$uid --tag pre-commit:${PWD##*/} .pre-commit
+  docker build --build-arg GID=$GID --build-arg UID=$UID --tag pre-commit:${PWD##*/} .pre-commit
 else
   echo "Using existing pre-commit:${PWD##*/} image."
-  docker build --build-arg uid=$uid --tag pre-commit:${PWD##*/} .pre-commit &>/dev/null
+  docker build --build-arg GID=$GID --build-arg UID=$UID --quiet --tag pre-commit:${PWD##*/} .pre-commit 1>/dev/null
 fi
 
 if [ ! -d /tmp/pre-commit/${PWD##*/}/mypy_cache ]; then
