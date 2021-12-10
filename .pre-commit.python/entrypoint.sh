@@ -12,8 +12,6 @@ hooks=([md]=mdformat [py]=black,flake8,isort,mypy,pydocstyle)
 # if hook actions are required increment the error code before making them happen
 # issues with bash variables and nested loops in subshells asked for a lock file
 
-
-
 for e in ${!hooks[@]}; do
   git diff --name-only --diff-filter=ACM | sort | uniq | grep ".$e$" | while read f; do
     for h in $(sed 's/,/ /g' <<< ${hooks[$e]}); do
