@@ -19,7 +19,7 @@ for e in "${!hooks[@]}"; do
     for h in ${hooks[$e]//,/ }; do
       echo -e "\n$(tput bold)$h:$(tput sgr0)"
 
-      obj=$(grep -v "^\s*#" ~/hooks.y*ml | grep --after-context=3 "^$h:")
+      obj=$(grep -v "^\s*#" /usr/share/pre-commit/hooks.y*ml | grep --after-context=3 "^$h:")
       cmd=$(awk '$1=="cmd:" {$1="";print$0}' <<< "$obj" | xargs)
       flags=$(awk '$1=="flags:" {$1="";print$0}' <<< "$obj")
       check=$(awk '$1=="check:" {$1="";print$0}' <<< "$obj")
