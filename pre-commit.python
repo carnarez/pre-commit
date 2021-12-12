@@ -2,18 +2,23 @@
 
 set -e
 
-GID=$(id -g)
-
-if [ $(docker images | grep pre-commit | grep -c ${PWD##*/}) == "0" ]; then
+if [ "$(docker images | grep pre-commit | grep -c "${PWD##*/}")" == "0" ]; then
   echo -e "$(tput bold)Building the required pre-commit:${PWD##*/} image:$(tput sgr0)\n"
-  docker build --build-arg GID=$GID --build-arg UID=$UID --tag pre-commit:${PWD##*/} .pre-commit
+  docker build -t pre-commit:"${PWD##*/}" .pre-commit
 else
   echo "Using existing pre-commit:${PWD##*/} image."
-  docker build --build-arg GID=$GID --build-arg UID=$UID --quiet --tag pre-commit:${PWD##*/} .pre-commit 1>/dev/null
+  docker build -q -t pre-commit:"${PWD##*/}" .pre-commit 1>/dev/null
 fi
 
-if [ ! -d /tmp/pre-commit/${PWD##*/}/mypy_cache ]; then
-  mkdir -p /tmp/pre-commit/${PWD##*/}/mypy_cache
-fi
+mypy_cache="/tmp/pre-commit/${PWD##*/}/mypy_cache"
 
-docker run --rm --volume $PWD:/usr/src --volume /tmp/pre-commit/${PWD##*/}/mypy_cache:/tmp/mypy_cache pre-commit:${PWD##*/}
+if [ ! -d "$mypy_cache" ]; then mkdir -p "$mypy_cache"; fi
+
+docker run --rm \
+           -u $(id -u):$(id -g) \
+           -v "$PWD":/usr/src \
+           -v /etc/group:/etc/group:ro \
+           -v /etc/passwd:/etc/passwd:ro \
+           -v /etc/shadow:/etc/shadow:ro \
+           -v "/tmp/pre-commit/${PWD##*/}/mypy_cache":/tmp/mypy_cache \
+           pre-commit:"${PWD##*/}"
