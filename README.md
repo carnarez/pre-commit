@@ -36,7 +36,7 @@ the `git` workflow. Check this out:
   * [Un]Register your hooks from the `.pre-commit/entrypoint.sh` file, associated with
     the files they should run on (identified via its extension). (You should only need
     to modify the
-    [associative array](https://github.com/carnarez/pre-commit/blob/master/.pre-commit/entrypoint.sh#L5)
+    [associative array](https://github.com/carnarez/pre-commit/blob/master/.pre-commit.python/entrypoint.sh#L5)
     at the top of the script, after the `declare -A` statement.)
   * Do not forget to edit the `.pre-commit/requirements.txt` file to add/remove any
     dependencies (or any other file defining your project dependencies). Version-pin
@@ -54,9 +54,8 @@ content (thus modifying the files). If the check run exited with a non-null erro
 the commit will be cancelled as the files are modified *after* staging and need to be
 re-staged for commit.
 
-This implementation remains for a unique base syntax (`Python` as of today). It could
-however easily be extended to run multiple containerized pre-commit workers; possibly in
-parallel as well.
+This implementation can easily be extended to run multiple containerized pre-commit
+workers; possibly in parallel as well.
 
 As mentioned above, this remains a crude hack, but satisfies my needs (without bothering
 colleagues with extra things to install on their respective systems).

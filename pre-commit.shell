@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+if [ "$(docker images | grep -c "pre-commit:shell")" == "0" ]; then
+  echo -e "$(tput bold)Building the required pre-commit:shell image:$(tput sgr0)\n"
+  docker build -t pre-commit:shell .pre-commit.shell
+else
+  echo "Using existing pre-commit:shell image."
+  docker build -q -t pre-commit:shell .pre-commit.shell 1>/dev/null
+fi
+
+docker run --rm \
+           -u $(id -u):$(id -g) \
+           -v "$PWD":/usr/src \
+           -v /etc/group:/etc/group:ro \
+           -v /etc/passwd:/etc/passwd:ro \
+           -v /etc/shadow:/etc/shadow:ro \
+           pre-commit:shell

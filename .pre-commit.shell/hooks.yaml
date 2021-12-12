@@ -1,0 +1,4 @@
+shellcheck:
+    cmd: shellcheck
+    flags:
+    check: --format=gcc
