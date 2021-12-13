@@ -4,10 +4,10 @@ set -e
 
 if [ "$(docker images | grep pre-commit | grep -c "${PWD##*/}")" == "0" ]; then
   echo -e "$(tput bold)Building the required pre-commit:${PWD##*/} image:$(tput sgr0)\n"
-  docker build -t pre-commit:"${PWD##*/}" .pre-commit.python
+  docker build --build-arg username=$(whoami) -t pre-commit:"${PWD##*/}" .pre-commit
 else
   echo "Using existing pre-commit:${PWD##*/} image."
-  docker build -q -t pre-commit:"${PWD##*/}" .pre-commit.python 1>/dev/null
+  docker build --build-arg username=$(whoami) -q -t pre-commit:"${PWD##*/}" .pre-commit 1>/dev/null
 fi
 
 mypy_cache="/tmp/pre-commit/${PWD##*/}/mypy_cache"
