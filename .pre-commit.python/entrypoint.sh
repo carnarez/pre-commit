@@ -15,7 +15,7 @@ hooks=([md]=mdformat [py]=black,flake8,isort,mypy,pydocstyle)
 # issues with bash variables and nested loops in subshells asked for a lock file
 
 for e in "${!hooks[@]}"; do
-  git diff --name-only --diff-filter=ACM | sort | uniq | grep ".$e$" | while read -r f; do
+  git diff --name-only --diff-filter=ACM | sort | uniq | grep "\.$e$" | while read -r f; do
     for h in ${hooks[$e]//,/ }; do
       echo -e "\n$(tput bold)$h:$(tput sgr0)"
 
