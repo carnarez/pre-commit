@@ -28,7 +28,7 @@ for e in "${!hooks[@]}"; do
     fi
 
     # check and apply hook action
-    if [ ! -z "$files" ]; then
+    if ([ ! -z "$files" ] && [ "$files" != " " ]); then
       echo -e "\n$(tput bold)$h:$(tput sgr0)"
 
       obj=$(grep -v "^\s*#" /usr/share/pre-commit/hooks.y*ml | grep --after-context=3 "^$h:")
