@@ -4,10 +4,10 @@ set -e
 
 if [ "$(docker images | grep pre-commit | grep -c "${PWD##*/}")" == "0" ]; then
   echo -e "$(tput bold)Building the required pre-commit:${PWD##*/} image:$(tput sgr0)\n"
-  docker build --build-arg username=$(whoami) -t pre-commit:"${PWD##*/}" .pre-commit
+  docker build --build-arg username=$(whoami) -t pre-commit/"${PWD##*/}" .pre-commit
 else
   echo "Updating and using existing pre-commit:${PWD##*/} image."
-  docker build --build-arg username=$(whoami) -q -t pre-commit:"${PWD##*/}" .pre-commit 1>/dev/null
+  docker build --build-arg username=$(whoami) -q -t pre-commit/"${PWD##*/}" .pre-commit 1>/dev/null
 fi
 
 mypy_cache="/tmp/pre-commit/${PWD##*/}/mypy_cache"
@@ -21,4 +21,4 @@ docker run --rm \
            -v /etc/passwd:/etc/passwd:ro \
            -v /etc/shadow:/etc/shadow:ro \
            -v "/tmp/pre-commit/${PWD##*/}/mypy_cache":/tmp/mypy_cache \
-           pre-commit:"${PWD##*/}"
+           pre-commit/"${PWD##*/}"
