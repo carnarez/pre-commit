@@ -1,0 +1,4 @@
+eslint:
+    cmd: npx eslint
+    flags: --config /tmp/eslintrc
+    check: --fix-dry-run
