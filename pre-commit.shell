@@ -2,18 +2,18 @@
 
 set -e
 
-if [ "$(docker images | grep -c "pre-commit/shell")" == "0" ]; then
-  echo -e "$(tput bold)Building the required pre-commit/shell image:$(tput sgr0)\n"
-  docker build -t pre-commit/shell .pre-commit.shell
+if [ "$(docker images | grep -c "shell/pre-commit")" == "0" ]; then
+  echo -e "$(tput bold)Building the required shell/pre-commit image:$(tput sgr0)\n"
+  docker build --tag shell/pre-commit .pre-commit.shell
 else
-  echo "Using existing pre-commit:shell image."
-  docker build -q -t pre-commit/shell .pre-commit.shell 1>/dev/null
+  echo "Using existing shell/pre-commit image."
+  docker build --quiet --tag shell/pre-commit .pre-commit.shell 1>/dev/null
 fi
 
 docker run --rm \
-           -u $(id -u):$(id -g) \
-           -v "$PWD":/usr/src \
-           -v /etc/group:/etc/group:ro \
-           -v /etc/passwd:/etc/passwd:ro \
-           -v /etc/shadow:/etc/shadow:ro \
-           pre-commit/shell
+           --user $(id -u):$(id -g) \
+           --volume "$PWD":/usr/src \
+           --volume /etc/group:/etc/group:ro \
+           --volume /etc/passwd:/etc/passwd:ro \
+           --volume /etc/shadow:/etc/shadow:ro \
+           shell/pre-commit
