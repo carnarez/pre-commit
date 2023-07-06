@@ -6,7 +6,7 @@ if [ "$(docker images | grep -c "${PWD##*/}/pre-commit")" == "0" ]; then
   echo -e "$(tput bold)Building the required ${PWD##*/}/pre-commit image:$(tput sgr0)\n"
   docker build --build-arg username=$(whoami) --tag "${PWD##*/}/pre-commit" .pre-commit
 else
-  echo "Updating and using existing ${PWD##*/}pre-commit image."
+  echo "Updating and using existing ${PWD##*/}/pre-commit image."
   docker build --build-arg username=$(whoami) --quiet --tag "${PWD##*/}/pre-commit" .pre-commit 1>/dev/null
 fi
 
